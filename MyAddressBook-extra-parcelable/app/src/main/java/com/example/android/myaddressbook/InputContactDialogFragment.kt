@@ -73,12 +73,13 @@ class InputContactDialogFragment : DialogFragment(), TextWatcher {
         // If the contact is being edited, populates the EditText with the old
         // information
         if (editing) {
-            val (firstName, lastName, email) = mContact!!
-            mFirstNameEdit?.setText(firstName)
-            mFirstNameEdit?.isEnabled = false
-            mLastNameEdit?.setText(lastName)
-            mLastNameEdit?.isEnabled = false
-            mEmailEdit?.setText(email)
+            mContact?.let { (firstName, lastName, email) ->
+                mFirstNameEdit?.setText(firstName)
+                mFirstNameEdit?.isEnabled = false
+                mLastNameEdit?.setText(lastName)
+                mLastNameEdit?.isEnabled = false
+                mEmailEdit?.setText(email)
+            }
         }
         // Overrides the "Save" button press and check for valid input
         button_ok.setOnClickListener {
@@ -108,6 +109,14 @@ class InputContactDialogFragment : DialogFragment(), TextWatcher {
 
         button_cancel.setOnClickListener { dismiss() }
     }
+
+
+    /**
+     * Calls the specified function [block] with `this` value as
+     * its argument and returns its result.
+     */
+    inline fun <T, R> T.let(block: (T) -> R): R                           = block(this)
+
 
     override fun onDestroyView() {
         super.onDestroyView()
